@@ -13,6 +13,7 @@ class MovieTypeTableViewCell: UITableViewCell, UICollectionViewDataSource, UICol
 
     var movie:Movie!
     var movies = [Movie]()
+
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var lblSectionName: UILabel!
@@ -45,7 +46,7 @@ class MovieTypeTableViewCell: UITableViewCell, UICollectionViewDataSource, UICol
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        loadJSON(keyword: "speed")
+//        loadJSON(keyword: "speed")
         // Initialization code
     }
 

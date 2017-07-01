@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  MainViewController.swift
 //  PodTest
 //
 //  Created by Jakkawad Chaiplee on 6/16/2560 BE.
@@ -7,36 +7,18 @@
 //
 
 import UIKit
-import Alamofire
 
-class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     var movie:Movie!
     var movies = [Movie]()
+    var sectionName = ["Speed", "Click", "Thor"]
     
     @IBOutlet weak var tableView: UITableView!
-
-    func loadJSON(keyword: String) {
-        Alamofire.request("http://www.omdbapi.com/?apikey=a7cc5d0f&s=\(keyword)").responseJSON { response in
-            if let result = response.result.value as? Dictionary<String, AnyObject> {
-//                print(result)
-                if let search = result["Search"] as? [Dictionary<String, AnyObject>] {
-//                    print(search)
-                    for object in search {
-                        let movie = Movie(movieDict: object)
-//                        print(movie.title)
-                        self.movies.append(movie)
-                    }
-                    self.tableView.reloadData()
-                }
-            }
-        }
-    }
-    
     
     //MARK: TableView
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return sectionName.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -45,15 +27,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell0 = tableView.dequeueReusableCell(withIdentifier: "tableCell0") as? MovieTypeTableViewCell
-//        let movie = movies[indexPath.row]
-//        cell0?.textLabel?.text = movie.title
+        cell0?.lblSectionName.text = sectionName[indexPath.section]
+        cell0?.loadJSON(keyword: sectionName[indexPath.section])
         return cell0!
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        loadJSON(keyword: "speed")
         // Do any additional setup after loading the view, typically from a nib.
     }
 
